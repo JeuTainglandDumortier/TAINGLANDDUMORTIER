@@ -1,4 +1,0 @@
-gcc -o test main.c -lmingw32 -lSDL2main -lSDL2
-
-
-gcc -o testom testm2.c -lmingw32 -lSDL2main -lSDL2
