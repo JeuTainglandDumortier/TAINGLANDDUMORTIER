@@ -1,12 +1,26 @@
 
-#include <SDL2/SDL.h>
 
 #ifndef SPRITE_H_
 #define SPRITE_H_
 
+#include <SDL2/SDL.h>
 
 
+typedef struct Face
+{
+	
+	SDL_Rect src;
+	SDL_Rect dest;
 
+}Face;
+
+
+typedef struct Sprite
+{
+	 Face tabfacefront[15];
+	 Face tabfaceback[15];
+}	Sprite;
+	
 	
     
     
