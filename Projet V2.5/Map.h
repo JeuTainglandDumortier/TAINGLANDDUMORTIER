@@ -3,18 +3,7 @@
 #include <SDL2/SDL.h>
 #define EMPTY_TILE ' '
 
-
-
-
-
-typedef struct Postext
-{
-	SDL_Rect dest;
-	
-	
-	
-}Postext;
-
+static const char* COLLISION_TILE_ID;
 
 typedef struct Map
 {
@@ -22,23 +11,19 @@ typedef struct Map
     unsigned int largeur, hauteur;
     unsigned int largeur_tile, hauteur_tile;
     char** tiles;
-	Postext **tabtexture;
-    struct SDL_Texture* texture;
-    //struct SDL_Renderer* afficheur;
+    SDL_Texture* tile_texture;
+    SDL_Texture* map_texture;
+    unsigned int colision_tile_count;
+    SDL_Rect* collision_boxs;
 } Map;
-
-
-
-
-
 
 Map* CreateMap(const char* path, unsigned largeur_tile, unsigned hauteur_tile);
 
-void LoadMapGraphics(Map* map, SDL_Renderer* renderer, const char* tileset_path);
+SDL_Texture* LoadMapGraphics(Map* map, SDL_Renderer* renderer, const char* tileset_path);
+
+void LoadMapTileGraphics(Map* map, SDL_Renderer* mapRend);
 
 void RenderMap(Map* map,SDL_Renderer* mapRend);
-
-char* tabcar (const char* tileset_path);
 
 void DestroyMap(Map* map);
 
