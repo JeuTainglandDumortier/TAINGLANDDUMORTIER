@@ -17,7 +17,7 @@ liste l_vide ()
 liste cons (Monster* x, liste L)
 {
   liste M ;
-  // Réservation de la place mémoire nécessaire pour une cellule :
+ 
   M = malloc (sizeof (*M)) ;
   M->premier = x ; // On peut aussi écrire " M->premier = x ; "
   M->suivant = L ;
@@ -119,26 +119,54 @@ liste inserer_liste_D (unsigned int n, Monster* x, liste L)
 
 
 
-
-
-
-
-
-
-void removeMonsterI(liste M, Monster* monster)
+bool appartient_I(Monster* monster, liste M)
 {
-	printf("prinft");
-    //liste monstre = M->premier;
-    while((!est_vide(reste(M))) && (!egalmonster(prem(M->suivant), monster)))// if (liste->suivant->premier == monster))
-    {
-		printf("testseg1");
-        M=reste(M); 
-    }
-    printf("testseg2");
-    M->suivant=M->suivant->suivant;
-    free_monster(M->suivant->premier);
-    
-    
+	liste L;
+	L=M;
+	while (!est_vide(L) && egalmonster(prem(L),monster))
+	{
+		L=reste(L);
+	}
+	return !est_vide(L);
+}
+
+
+
+
+
+liste removeMonsterR( Monster* monster,liste M)
+{
+	if (est_vide(reste(M)) && !egalmonster(monster,prem(M)))
+	{
+		ecrire_reste(cons(prem(M),l_vide()),M);
+	}
+	if (egalmonster(monster,prem(M)))
+	{
+		removeMonsterI(monster,reste(M));
+	}
+	return cons(prem(M),removeMonsterI(monster,reste(M)));
+	
+   
+}
+
+
+liste removeMonsterI(Monster* monster, liste M)
+{
+	//Monster* m=monster;
+	liste L,C;
+	C=l_vide();
+	
+	L=M;
+	while (!appartient_I(monster,L))
+	{
+		if(egalmonster(prem(L),monster))
+		{
+			L=reste(L);
+		}
+		C=cons(prem(L),C);
+		L=reste(L);
+	}
+	return C;
 }
 
 
@@ -147,20 +175,6 @@ void removeMonsterI(liste M, Monster* monster)
 
 
 
-
-
-/*int CollisionentreMonster(liste M, Monster* monster )
-{
-    while (!est_vide(M))
-    {
-        if(IsInBox(&(monster->dest), &(M->premier->dest)))
-        {
-            return 1;
-        }
-        M=reste(M);
-    }
-    return 0;
-}*/
 
 
 
@@ -211,15 +225,15 @@ void RenderListeMonster(SDL_Renderer* renderer,liste M)
 	while (!est_vide(M))
 	{
         
-    //if( prem(M)->pv>0)
-       // {
+    
+       
 		RenderMonster(renderer, prem(M));
-       // }
+       
 		M=reste(M);
-		//printf("compteur render:%d",cpt);
+		
 		
 	}
-    //liberer_liste(M);
+   
 }
 
 
@@ -228,15 +242,7 @@ void RenderListeMonster(SDL_Renderer* renderer,liste M)
         
     
     
-/*void replaceMonster(liste M, Monster* monster)
-{
-    liste M2=M;
-    while ( CollisionentreMonster(M,monster))
-    {
-        monster->dest=(SDL_Rect){valeuralea(0, map->largeur*map->largeur_tile),valeuralea(0, map->hauteur*map->hauteur_tile),20,20};
-    }
-    
-}*/
+
     
     
     

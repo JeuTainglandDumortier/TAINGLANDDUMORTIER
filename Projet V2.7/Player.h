@@ -15,7 +15,7 @@ typedef struct Player
 
 Player* CreatePlayer(SDL_Renderer *pRenderer);
 
-int HandlePlayerMovment(Map* map, Player* player, int addx, int addy, liste M);
+int HandlePlayerMovment(Map* map, Player* player, int addx, int addy, liste M,SDL_Event* event);
 
 void RenderPlayer(SDL_Renderer* renderer, Player* player);
 

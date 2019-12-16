@@ -64,7 +64,7 @@ SDL_Texture* LoadMapGraphics(Map* map,SDL_Renderer* renderer, const char* tilese
 {
 	if (renderer)
 	{
-    //map->afficheur = renderer;
+    
     SDL_Surface* tileset = SDL_LoadBMP(tileset_path);
     if (!tileset){
         printf("Can't open the image file '%s'.", tileset_path);

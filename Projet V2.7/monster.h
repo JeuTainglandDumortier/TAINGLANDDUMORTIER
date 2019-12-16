@@ -21,7 +21,7 @@ int valeuralea(int min1, int max1);
 int CollisionMonster(Monster *monster, Map* map, int posx, int posy);
 Monster* CreateMonster(SDL_Renderer *pRenderer, Map* map);
 void RenderMonster(SDL_Renderer* renderer, Monster* monster);
-int movement_monster(Monster* monster,int depl, Map* map);
+int valeuraleaposm(int min1 , int max1);
 void deplacemonster(Monster* monster,Map* map,int addx, int addy);
 int egalmonster(Monster* m1, Monster* m2);
 

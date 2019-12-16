@@ -3,7 +3,7 @@
 #include <SDL2/SDL.h>
 #define EMPTY_TILE ' '
 
-static const char* COLLISION_TILE_ID;
+//static const char* COLLISION_TILE_ID;
 
 typedef struct Map
 {

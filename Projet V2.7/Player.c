@@ -27,13 +27,13 @@ void RenderPlayer(SDL_Renderer* renderer, Player* player)
     SDL_RenderCopy(renderer, player->texture, &player->src, &player->dest);
 }
 
-int HandlePlayerMovment(Map* map, Player* player, int addx, int addy, liste M)
+int HandlePlayerMovment(Map* map, Player* player, int addx, int addy, liste M,SDL_Event* event)
 {
     
     SDL_Rect future_pos = (SDL_Rect) { player->dest.x + addx, player->dest.y + addy, player->dest.w, player->dest.h };
     Player FuturPos = {player->texture, player->src, future_pos};
     for (int i = 0; i < map->colision_tile_count; i++){
-        if ((IsInBox(&future_pos, &map->collision_boxs[i])) || (CollisionMonsterPLayer(M,&FuturPos)))
+        if ((IsInBox(&future_pos, &map->collision_boxs[i])) || (CollisionMonsterPLayer(M,&FuturPos,event)))
         {
             return 0;
         }

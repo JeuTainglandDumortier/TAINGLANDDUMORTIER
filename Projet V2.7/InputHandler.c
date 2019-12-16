@@ -12,64 +12,96 @@
 
 
 
+
+
+
 void Handmonster(liste M,Map* map)
 {
-    int i=1;
-	int addx=valeuraleaposm(-2,2);
-   int addy=valeuraleaposm(-2,2);
-	M=reste(M);
-    while (!est_vide(M->suivant))
-    {
-		//affichermonstersliste(M);
-	//SDL_Delay(100);
-    	//if(movement_monster(M->premier,2,map)){}
-		printf("addx:%d\n",addx);
-		printf("addy:%d\n",addy);
-		//printf("testcpt:%d\n",i);
-			
-		while (!CollisionMonster(M->premier,map,addx,addy)) 
-        {
-            
-            //printf("test2:%d\n",i);
-            addx=valeuraleaposm(-2,2);
-            addy=valeuraleaposm(3,4);
-			i+=1;
-             
-        }
-        	deplacemonster(M->premier,map, addx,addy);
-        	M=M->suivant;
-			//}
-				
-        
-        
-    }
-    //liberer_liste(copieM);
-    
-    
-}
+    int i=0,j=0;
+	int addx, addy,posx,posy;
+	//liste copieM=M;
 
-
-
-void evenement(liste M)
-{
+	
     while (!est_vide(M))
     {
-        if (prem(M)->pv<=0)
-        {	
-		printf("testeve\n");
-            M=removeMonsterI(M,prem(M));
+	
+		
+		addx=valeuraleaposm(0,10);
+	if (addx!=0)
+	{
+		if (valeuralea(0,1)==0)
+		{
+			addx=-valeuraleaposm(0,10);
+		}
+		else 
+		{
+			addx=valeuraleaposm(0,10);
+		}
+		addy=0;
+	}
+	else
+	{
+		if (valeuralea(0,1)==0)
+		{
+			addy=-valeuraleaposm(0,10);
+		}
+		else 
+		{
+			addy=valeuraleaposm(0,10);
+		
+		}
+	}
+		
+	
+		posx=prem(M)->dest.x+addx;
+		posy=prem(M)->dest.y+addy;
+			
+		if ((!CollisionMonster(M->premier,map,posx,posy))) //&& (!CollisionentreMonster(copieM,prem(M))))
+        {
+            
+           deplacemonster(M->premier,map, addx,addy);
+		   M=reste(M);
+			i=i+1;
+			
         }
-        M=reste(M);
+		j=j+1;
+		
     }
-    
+   
+  }
+
+
+
+
+void evement(liste M)
+{
+	liste copieM;
+	copieM=M;
+	while (!est_vide(M))
+	{
+		if (prem(M)->pv<=0)
+		{
+			removeMonsterR(prem(M),copieM);
+		}
+	M=reste(M);
+	}
+	M=copieM;
 }
+	
+	
+	
+	
+	
+	
+	
 
 
 
-void HandleInput(Map* map, Player* player, SDL_Event* event, liste M)
+void HandleInput(Map* map, Player* player, SDL_Event *event, liste M)
 {
     SDL_PollEvent(event);
-    switch (event->type){
+    switch (event->type)
+	{
         case SDL_QUIT:
             exit(0);
             break;
@@ -80,14 +112,15 @@ void HandleInput(Map* map, Player* player, SDL_Event* event, liste M)
                 exit(0);
             
             case SDLK_d:
-                if (HandlePlayerMovment(map, player, 2, 0, M))// && CollisionMonsterPLayer(M,player))
+                if (HandlePlayerMovment(map, player, 2, 0, M,event))// && CollisionMonsterPLayer(M,player))
                 {
                     player->src.y=910;
 				    player->dest.x+=2;
                     player->src.x+=120;
                     if(player->src.x==1200)
                         player->src.x=0;
-                Handmonster(M,map);
+               Handmonster(M,map);
+			   //affichermonstersliste(M);
                     //printf("posx:%d , posy:%d\n",player->dest.x,player->dest.y);
                    // printf("srcx:%d , srcy:%d\n",player->src.x,player->src.y);
                     
@@ -95,7 +128,7 @@ void HandleInput(Map* map, Player* player, SDL_Event* event, liste M)
 
                 break;
             case SDLK_q:
-                if (HandlePlayerMovment(map, player, -2, 0, M)) //&& CollisionMonsterPLayer(M,player))
+                if (HandlePlayerMovment(map, player, -2, 0, M,event)) //&& CollisionMonsterPLayer(M,player))
                 {
                     player->src.y=660;
                     player->dest.x-=2;
@@ -108,20 +141,20 @@ void HandleInput(Map* map, Player* player, SDL_Event* event, liste M)
                 }
                 break;
             case SDLK_s:
-                if (HandlePlayerMovment(map, player, 0, 2, M))// && CollisionMonsterPLayer(M,player))
+                if (HandlePlayerMovment(map, player, 0, 2, M,event))// && CollisionMonsterPLayer(M,player))
                 {
                     player->src.y=530;
                     player->dest.y+=2;
                     player->src.x+=120;
                     if(player->src.x==1200)
                         player->src.x=0;
-                    Handmonster(M,map);
+                   Handmonster(M,map);
                     //printf("posx:%d , posy:%d\n",player->dest.x,player->dest.y);
                     //printf("srcx:%d , srcy:%d\n",player->src.x,player->src.y);
                 }
                 break;
             case SDLK_z:
-                if (HandlePlayerMovment(map, player, 0, -2, M)) //&& CollisionMonsterPLayer(M,player))
+                if (HandlePlayerMovment(map, player, 0, -2, M,event)) //&& CollisionMonsterPLayer(M,player))
                 {
                     player->src.y=790;
 				    player->dest.y-=2;
@@ -130,20 +163,19 @@ void HandleInput(Map* map, Player* player, SDL_Event* event, liste M)
                         player->src.x=0;
                     
                    Handmonster(M,map);
-                   // printf("posx:%d , posy:%d\n",player->dest.x,player->dest.y);
-                   // printf("srcx:%d , srcy:%d\n",player->src.x,player->src.y);
+                   
                 }
                 break;
                 
                 case SDLK_t:
-                    //liste copieM=M;
+                   
                     while (!est_vide(M))
                     {
                         if (CollisonCombat(M->premier,player))
                         {
                            M->premier->pv-=5;
-                           printf("pv du monstre:%d\n",M->premier->pv);
-                           
+                           printf("combat");
+						   
                         }
                         M=reste(M);
                         
@@ -152,8 +184,11 @@ void HandleInput(Map* map, Player* player, SDL_Event* event, liste M)
                     
             }
     }
-    //evenement(M);
-    //Handmonster(M);
+	evement(M);
+	
+	
+  
+	
 }
 
 

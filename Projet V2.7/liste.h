@@ -32,7 +32,10 @@ liste CreateListeMonster(int nbmonster,SDL_Renderer *pRenderer, Map *map);
 void ecrire_reste (liste R, liste L) ;
 void RenderListeMonster(SDL_Renderer* renderer,liste M);
 void supprimerElement(liste M, Monster* monster);
-//int CollisionentreMonster(liste M, Monster* monster );
+liste removeMonsterR( Monster* monster,liste M);
+liste removeMonsterI( Monster* monster,liste M);
+bool appartient_I(Monster* monster, liste M);
+
 
 /* IMPLANTATION DES OPERATIONS PRIMITIVES */
 /* Constructeurs */

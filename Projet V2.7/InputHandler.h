@@ -13,4 +13,5 @@
 void HandleInput(Map* map, Player* player, SDL_Event* event, liste M);
 void Handmonster(liste M,Map* map);
 void evenement(liste M);
+void evement(liste M);
 #endif

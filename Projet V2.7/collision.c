@@ -24,43 +24,33 @@
 
 
 
-int CollisionentreMonster(liste M, Monster* monster, Player* player )
+int CollisionentreMonster(liste M, Monster* monster )
 {
    
     while (!est_vide(M))
     {
-        if((IsInBox(&(monster->dest), &(M->premier->dest))) || (IsInBox(&(M->premier->dest), &(player->dest))))
-        {
-            return 1;
-        }
+		//if (!egalmonster(prem(M),monster))
+		//{
+			
+			if(IsInBox(&(monster->dest), &(M->premier->dest))) 
+			{
+				printf("collision entre monstres\n");
+				return 1;
+				
+			}
+		//}
         M=reste(M);
     }
     return 0;
 }
 
-
-
-int CollisionMonsterPLayer(liste M, Player* player)
-{
-    
-    while (!est_vide(M))
-    {
-        if((IsInBox(&(M->premier->dest), &(player->dest))) && (M->premier->pv>0))
-        {
-            printf("test collision joueur monstres\n");
-            return 1;
-        }
-        M=reste(M);
-    }
-    return 0;
-    
-}
 
 int CollisonCombat(Monster* monster, Player *player)
 {
     if((IsInBox(&(monster->dest), &(player->dest))) && (monster->pv>0))
         {
-            printf("test collision joueur monstres\n");
+           
+			
             return 1;
         }
 
@@ -69,14 +59,48 @@ int CollisonCombat(Monster* monster, Player *player)
 
 
 
-/*int all_collision (liste M, PLayer* player ,Map* map)
+
+
+int CollisionMonsterPLayer(liste M, Player* player,SDL_Event* event)
 {
-    liste M=copieM;
     
-    while (!est_vide(copieM)
+    while (!est_vide(M))
     {
-        if (CollisionentreMonster(*/
-        
+		if (CollisonCombat(prem(M),player))
+		{
+				SDL_PollEvent(event);
+				switch (event->type)
+				{
+					case SDL_KEYDOWN:
+					switch (event->key.keysym.sym)
+					{
+						case SDLK_t:
+                   
+						
+							   M->premier->pv-=5;
+							   printf("combatc\n");
+							   printf("pv monstres:%d\n",M->premier->pv);
+							
+							break;
+							
+					}
+				}
+                   return 1;     
+         }
+                    
+			
+		
+        M=reste(M);
+    }
+    return 0;
+    
+}
+
+
+
+
+
+
         
         
         

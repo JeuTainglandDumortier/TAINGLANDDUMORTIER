@@ -13,7 +13,8 @@
 
 
 int CollisionentreMonster(liste M, Monster* monster );
-int CollisionMonsterPLayer(liste M, Player* player);
+int CollisionMonsterPLayer(liste M, Player* player,SDL_Event* event);
+int CollisonCombat(Monster* monster, Player *player);
 //void CollisionMonster(Monster *monster, Map* map);
 
 
